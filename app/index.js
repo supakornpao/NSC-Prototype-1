@@ -11,7 +11,7 @@ const Home = () => {
     const router = useRouter();
 
     return (
-        <SafeAreaView style={{flex:1, backgroundColor: COLORS.gray2}}>
+        <SafeAreaView style={{flex:1, backgroundColor: "#ADD8E6"}}>
         <Stack.Screen
             options={{
                 headerStyle: { backgroundColor: COLORS.lightWhite},
@@ -22,19 +22,25 @@ const Home = () => {
             }}
         
         />
-            <Text style={[styles_head.text, { marginBottom: 80, marginTop: 100}]}>Skin Cancer Detector</Text>
+            <Text style={[styles_head.text, { marginBottom: 40, marginTop: 50}]}>Skin Cancer Detector</Text>
             
-            <TouchableOpacity style={styles_normal.button} onPress={onPress}>
-                <Text style={[styles_normal.text,{ marginBottom: 50}]}>Start</Text>
-            </TouchableOpacity>
+            <View style={styles_normal.container}>
+                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                    <Text style={styles_normal.text}>Quick Scan</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={styles_normal.button} onPress={onPress}>
-                <Text style={[styles_normal.text,{ marginBottom: 50}]}>Setting</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                    <Text style={styles_normal.text}>Weekly Report</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity style={styles_normal.button} onPress={onPress}>
-                <Text style={[styles_normal.text,{ marginBottom: 50}]}>Quit</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                    <Text style={styles_normal.text}>Information</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                    <Text style={styles_normal.text}>Setting</Text>
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     )
 }
@@ -56,21 +62,29 @@ const styles_head = StyleSheet.create({
 const styles_normal = StyleSheet.create({
     container:{
         flex:1,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        padding: 10,
+        margin: 5,
     },
     text: {
-        fontSize: 30,
-        fontWeight: '300',
-        textAlign: 'center'
+        fontSize: 40,
+        fontWeight: '400',
+        textAlign: 'center',
     },
     button: {
+        width: 140 * 4,
+        height: 140,
         alignItems: 'center',
-        backgroundColor: '#88E788',
-        padding: 5,
-        marginVertical: 40,
+        justifyContent: 'center',
+        backgroundColor: '#F5E6A9',
+        margin: 10,
 
-    }
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        borderBottomLeftRadius: 40,
+        borderBottomRightRadius: 40,
+    },
     })
 
 export default Home;
