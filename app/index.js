@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native'
 import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../constants'
@@ -9,6 +9,7 @@ const Home = () => {
     const [count, setCount] = useState(0);
     const onPress = () => setCount(prevCount => prevCount + 1);
     const router = useRouter();
+    const QuickScan = () => Alert.alert("QuickScan")
 
     return (
         <SafeAreaView style={{flex:1, backgroundColor: "#ADD8E6"}}>
@@ -25,7 +26,7 @@ const Home = () => {
             <Text style={[styles_head.text, { marginBottom: 40, marginTop: 50}]}>Skin Cancer Detector</Text>
             
             <View style={styles_normal.container}>
-                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                <TouchableOpacity style={styles_normal.button} onPress={QuickScan}>
                     <Text style={styles_normal.text}>Quick Scan</Text>
                 </TouchableOpacity>
 
@@ -33,7 +34,7 @@ const Home = () => {
                     <Text style={styles_normal.text}>Weekly Report</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/Information')}>
                     <Text style={styles_normal.text}>Information</Text>
                 </TouchableOpacity>
 
@@ -73,12 +74,12 @@ const styles_normal = StyleSheet.create({
         textAlign: 'center',
     },
     button: {
-        width: 140 * 4,
-        height: 140,
+        width: 90 * 4,
+        height: 90,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F5E6A9',
-        margin: 10,
+        margin: 35,
 
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
@@ -86,5 +87,7 @@ const styles_normal = StyleSheet.create({
         borderBottomRightRadius: 40,
     },
     })
+
+    Home.id = 'HomeScreen';
 
 export default Home;
