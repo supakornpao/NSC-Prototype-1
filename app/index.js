@@ -26,7 +26,7 @@ const Home = () => {
             <Text style={[styles_head.text, { marginBottom: 40, marginTop: 50}]}>Skin Cancer Detector</Text>
             
             <View style={styles_normal.container}>
-                <TouchableOpacity style={styles_normal.button} onPress={QuickScan}>
+                <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/Camera_A')}>
                     <Text style={styles_normal.text}>Quick Scan</Text>
                 </TouchableOpacity>
 
@@ -79,7 +79,7 @@ const styles_normal = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F5E6A9',
-        margin: 35,
+        margin: 20,
 
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
