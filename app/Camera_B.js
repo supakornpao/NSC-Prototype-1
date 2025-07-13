@@ -1,10 +1,13 @@
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState, useRef } from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function CameraScreen() {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
+  const [isLoading, setIsLoading] = useState(false)
+  const cameraRef = useRef(null);
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -23,14 +26,43 @@ export default function CameraScreen() {
 
   function toggleCameraFacing() {
     setFacing(current => (current === 'back' ? 'front' : 'back'));
+    
   }
 
+  async function takePhoto(){
+    if(!cameraRef.current) return;
+
+    try{
+      setIsLoading(true);
+      const photo = await current.takePictureAsync({})
+    
+      console.log('Photo taken:', photo);
+
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      } catch(error){
+        console.error('Error taking photo:', error);
+      } finally{
+        setIsLoading(false)
+      }
+    }  
+
+  if(isLoading) {
+    return(
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="0000ff"/>
+          <Text>Loading...</Text>
+      </SafeAreaView>
+    )
+  }
   return (
     <View style={styles.container}>
       <CameraView style={styles.camera} facing={facing}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={takePhoto}>
+            <Text style={styles.text}>Take Photo</Text>
           </TouchableOpacity>
         </View>
       </CameraView>
@@ -65,5 +97,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#F5F5F5",
+    justifyContent: "center",
+    alignItems: "center"
   },
 });
