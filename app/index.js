@@ -26,7 +26,7 @@ const Home = () => {
             <Text style={[styles_head.text, { marginBottom: 40, marginTop: 50}]}>Skin Cancer Detector</Text>
             
             <View style={styles_normal.container}>
-                <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/Camera_B')}>
+                <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/Report')}>
                     <Text style={styles_normal.text}>Quick Scan</Text>
                 </TouchableOpacity>
 

@@ -97,7 +97,7 @@ const styles_normal = StyleSheet.create({
     },
     button: {
         width: 40 * 4,
-        height: 20,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F5E6A9',
@@ -117,6 +117,6 @@ const styles_normal = StyleSheet.create({
     }
     })
 
-    Information.id = 'Information';
+Information.id = 'Information';
 
 export default Information;

@@ -1,12 +1,13 @@
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { useState, useRef } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function CameraScreen() {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [isLoading, setIsLoading] = useState(false)
+  const [photoUri, setPhotoUri] = useState(null);
   const cameraRef = useRef(null);
 
   if (!permission) {
@@ -34,17 +35,41 @@ export default function CameraScreen() {
 
     try{
       setIsLoading(true);
-      const photo = await current.takePictureAsync({})
+      const photo = await cameraRef.current.takePictureAsync({})
     
-      console.log('Photo taken:', photo);
+      setPhotoUri(photo.uri)
 
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      //await new Promise(resolve => setTimeout(resolve, 2000));
       } catch(error){
         console.error('Error taking photo:', error);
       } finally{
         setIsLoading(false)
       }
     }  
+
+  function retakePhoto(){
+    setPhotoUri(null)
+  }
+
+    if (photoUri) {
+      return (
+        <SafeAreaView style={styles.container}>
+          <Image source={{ uri: photoUri }} style={styles.preview} />
+          <View style={styles.previewButtons}>
+            <TouchableOpacity style={styles.button} onPress={retakePhoto}>
+              <Text style={styles.buttonText}>Retake</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={() => {
+              // Here you could save the photo, share it, etc.
+              console.log('Photo saved:', photoUri);
+              setPhotoUri(null); // Return to camera for now
+            }}>
+              <Text style={styles.buttonText}>Save</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      );
+    }
 
   if(isLoading) {
     return(
@@ -56,7 +81,7 @@ export default function CameraScreen() {
   }
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing}>
+      <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
@@ -104,4 +129,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  preview: {
+    flex: 1,
+    width: '100%',
+  },
+  previewButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 20,
+    backgroundColor: '#000',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold'
+  }
 });
