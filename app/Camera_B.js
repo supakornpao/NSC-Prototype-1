@@ -2,6 +2,7 @@ import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { useState, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Stack, useRouter } from 'expo-router'
 
 export default function CameraScreen() {
   const [facing, setFacing] = useState('back');
@@ -9,6 +10,7 @@ export default function CameraScreen() {
   const [isLoading, setIsLoading] = useState(false)
   const [photoUri, setPhotoUri] = useState(null);
   const cameraRef = useRef(null);
+  const router = useRouter();
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -51,25 +53,37 @@ export default function CameraScreen() {
     setPhotoUri(null)
   }
 
-    if (photoUri) {
-      return (
-        <SafeAreaView style={styles.container}>
-          <Image source={{ uri: photoUri }} style={styles.preview} />
-          <View style={styles.previewButtons}>
-            <TouchableOpacity style={styles.button} onPress={retakePhoto}>
-              <Text style={styles.buttonText}>Retake</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => {
-              // Here you could save the photo, share it, etc.
-              console.log('Photo saved:', photoUri);
-              setPhotoUri(null); // Return to camera for now
-            }}>
-              <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      );
+  async function processAndNavigate() {
+    if (!photoUri) return;
+
+    try {
+      setIsLoading(true);
+
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      router.push('/Report')
+    } catch (error) {
+      console.error('Error processing photo', error);
+    } finally {
+      setIsLoading(flase);
     }
+  }
+
+  if (photoUri) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Image source={{ uri: photoUri }} style={styles.preview} />
+        <View style={styles.previewButtons}>
+          <TouchableOpacity style={styles.button} onPress={retakePhoto}>
+            <Text style={styles.buttonText}>Retake</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={processAndNavigate} disbled={isLoading}>
+            <Text style={styles.buttonText}>{isLoading ? 'Processing...' : 'Process'}</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   if(isLoading) {
     return(
