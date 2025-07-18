@@ -13,7 +13,7 @@ const Information = () => {
     const router = useRouter();
 
     return (
-        <SafeAreaView style={{flex:1, backgroundColor: "#ADD8E6"}}>
+        <SafeAreaView style={{flex:1, backgroundColor: "#B8E8F9"}}>
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite},
@@ -130,6 +130,7 @@ const styles_paragraph = StyleSheet.create({
       flex: 1,
       backgroundColor: '#87CEEB',
       padding: 20,
+      borderRadius:20
     },
     section: {
       marginBottom: 15,
@@ -205,12 +206,15 @@ const styles_normal = StyleSheet.create({
         textAlign: 'center',
     },
     button: {
+        marginTop: 20,
         width: 40 * 4,
         height: 50,
         fontSize: 30,
         justifyContent: 'center',
         alignContent: 'center',
         backgroundColor: '#F5E6A9',
+        borderWidth: 2,
+        borderColor:'black',
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         borderBottomLeftRadius: 40,

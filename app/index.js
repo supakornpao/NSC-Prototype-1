@@ -5,6 +5,8 @@ import { Stack, useRouter } from 'expo-router'
 import { COLORS, icons, images, SIZES , wallpaper} from '../constants'
 import { ScreenHeaderBtn } from '../components'
 
+
+
 const Home = () => {
     const [count, setCount] = useState(0);
     const onPress = () => setCount(prevCount => prevCount + 1);
@@ -13,7 +15,7 @@ const Home = () => {
 
     return (
         
-        <SafeAreaView style={{flex:1, backgroundColor: "#ADD8E6"}}>
+        <ImageBackground source={require("../assets/images/wallpaper.jpg")} style={{flex:1}}>
             <Stack.Screen
                         options={{
                             headerStyle: { backgroundColor: COLORS.lightWhite},
@@ -21,14 +23,14 @@ const Home = () => {
                             headerTitle: "Home"
                         }}
             />
-            <Text style={[styles_head.text, { marginBottom: 40, marginTop: 50}]}>Skin Cancer Detector</Text>
+            <Text style={[styles_head.text, { marginBottom: 40, marginTop: 50}]}>Deep Derma</Text>
             
             <View style={styles_normal.container}>
                 <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/Camera_B')}>
                     <Text style={styles_normal.text}>Quick Scan</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/weekly')}>
                     <Text style={styles_normal.text}>Weekly Report</Text>
                 </TouchableOpacity>
 
@@ -40,7 +42,7 @@ const Home = () => {
                     <Text style={styles_normal.text}>Setting</Text>
                 </TouchableOpacity>
             </View>
-        </SafeAreaView>
+        </ImageBackground>
     )
 }
 
@@ -54,6 +56,7 @@ const styles_head = StyleSheet.create({
         fontSize: 40,
         fontWeight: 'bold',
         textAlign: 'center',
+        color: 'white',
         textDecorationColor: '#008631'
     },
     })
@@ -76,8 +79,10 @@ const styles_normal = StyleSheet.create({
         height: 90,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#F5E6A9',
+        backgroundColor: '#E7F6FA',
         margin: 20,
+        borderWidth: 2,
+        borderColor:'black',
 
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,

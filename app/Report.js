@@ -16,9 +16,6 @@ const Report = () => {
                 <Stack.Screen
                     options={{
                         headerStyle: { backgroundColor: COLORS.lightWhite},
-                        headerLeft: () => (
-                            <ScreenHeaderBtn iconUrl={images.profile} dimension="100" />
-                        ),
                         headerTitle: ""
                     }}
                 />
