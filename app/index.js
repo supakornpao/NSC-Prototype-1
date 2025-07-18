@@ -36,7 +36,7 @@ const Home = () => {
                     <Text style={styles_normal.text}>Information</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles_normal.button} onPress={onPress}>
+                <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/Setting')}>
                     <Text style={styles_normal.text}>Setting</Text>
                 </TouchableOpacity>
             </View>

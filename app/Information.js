@@ -4,7 +4,9 @@ import { Stack, useRouter } from 'expo-router'
 
 import { COLORS, icons, images, SIZES } from '../constants'
 import { ScreenHeaderBtn } from '../components'
+import { Directions } from 'react-native-gesture-handler'
 
+import { Button } from 'react-native'
 const Information = () => {
     const [count, setCount] = useState(0);
     const onPress = () => setCount(prevCount => prevCount + 1);
@@ -118,7 +120,7 @@ const Information = () => {
 
             <TouchableOpacity style={styles_normal.button} onPress={() => router.push('/')}>
                     <Text style={styles_head.text_small}>Back</Text>
-                </TouchableOpacity>
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }
@@ -144,7 +146,7 @@ const styles_paragraph = StyleSheet.create({
       color: '#2c3e50',
       lineHeight: 26,
       marginBottom: 10,
-      textAlign: 'center',
+      textAlign: 'left',
     },
     bullet: {
       fontSize: 16,
@@ -198,21 +200,22 @@ const styles_normal = StyleSheet.create({
         borderBottomRightRadius: 80,
     },
     text: {
-        fontSize: 15,
+        fontSize: 20,
         fontWeight: '400',
         textAlign: 'center',
     },
     button: {
         width: 40 * 4,
-        height: 40,
-        alignItems: 'center',
+        height: 50,
+        fontSize: 30,
         justifyContent: 'center',
+        alignContent: 'center',
         backgroundColor: '#F5E6A9',
-        
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         borderBottomLeftRadius: 40,
         borderBottomRightRadius: 40,
+        
     },
     image:{
         width: 400,
