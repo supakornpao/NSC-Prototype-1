@@ -15,10 +15,8 @@ const Information = () => {
             <Stack.Screen
                 options={{
                     headerStyle: { backgroundColor: COLORS.lightWhite},
-                    headerLeft: () => (
-                        <ScreenHeaderBtn iconUrl={images.profile} dimension="100" />
-                    ),
-                    headerTitle: ""
+                    
+                    headerTitle: "Skin Cancer Information"
                 }}
             />
             <Text style={[styles_head.text_big, {marginTop: 40}]}>Information</Text>

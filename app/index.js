@@ -12,17 +12,15 @@ const Home = () => {
     const QuickScan = () => Alert.alert("QuickScan")
 
     return (
-        <SafeAreaView style={{flex:1, backgroundColor: "#ADD8E6"}}>
-        <Stack.Screen
-            options={{
-                headerStyle: { backgroundColor: COLORS.lightWhite},
-                headerLeft: () => (
-                    <ScreenHeaderBtn iconUrl={images.profile} dimension="100" />
-                ),
-                headerTitle: ""
-            }}
         
-        />
+        <SafeAreaView style={{flex:1, backgroundColor: "#ADD8E6"}}>
+            <Stack.Screen
+                        options={{
+                            headerStyle: { backgroundColor: COLORS.lightWhite},
+                                
+                            headerTitle: "Home"
+                        }}
+            />
             <Text style={[styles_head.text, { marginBottom: 40, marginTop: 50}]}>Skin Cancer Detector</Text>
             
             <View style={styles_normal.container}>
