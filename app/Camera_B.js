@@ -1,16 +1,38 @@
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { useState, useRef } from 'react';
+import { useState, useRef , useCallback} from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router'
+import * as ImagePicker from 'expo-image-picker'
+import Slider from '@react-native-community/slider';
 
 export default function CameraScreen() {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
+  const [zoom, setZoom] = useState(0);
   const [isLoading, setIsLoading] = useState(false)
   const [photoUri, setPhotoUri] = useState(null);
   const cameraRef = useRef(null);
   const router = useRouter();
+
+  const handleZoomChange = useCallback((value) => {
+    setZoom(value);
+  }, []);
+
+  const pickImage = async() => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images', 'videos'],
+      allowsEditing: true,
+      aspect:[4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -65,7 +87,7 @@ export default function CameraScreen() {
     } catch (error) {
       console.error('Error processing photo', error);
     } finally {
-      setIsLoading(flase);
+      setIsLoading(false);
     }
   }
 
@@ -95,14 +117,27 @@ export default function CameraScreen() {
   }
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={facing} ref={cameraRef}>
+      <CameraView style={styles.camera} facing={facing} ref={cameraRef} zoom={zoom}>
         <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={pickImage}>
+            <Text style={styles.text}>Access Gallery</Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={takePhoto}>
             <Text style={styles.text}>Take Photo</Text>
           </TouchableOpacity>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.text}>Zoom: {zoom.toFixed(1)}</Text>
+          <Slider
+            style={styles.slider}
+            minimumValue={0}
+            maximumValue={1}
+            value={zoom}
+            onValueChange={handleZoomChange}
+            />
         </View>
       </CameraView>
     </View>
@@ -125,7 +160,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'transparent',
-    margin: 64,
+    margin: 16,
   },
   button: {
     flex: 1,
@@ -136,6 +171,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
+  },
+  row:{
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems:"center",
+    marginBottom: 40
   },
   loadingContainer: {
     flex: 1,
@@ -157,5 +198,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  slider: {
+    flex: 1,
+  },
+  image:{
+    width:200,
+    height: 200,
   }
 });
